@@ -1,0 +1,37 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.px.sp_boot.oxm.dao.AuthorizeTransactionDao">
+    <resultMap type="com.px.sp_boot.oxm.pojo.AuthorizePayInfo" id="authorizePayInfo">
+        <id column="id" property="id"/>
+        <id column="client_key" property="clientKey"/>
+        <id column="category" property="category"/>
+        <result column="sales_id" property="salesId"/>
+        <result column="amount" property="amount"/>
+        <result column="card_number" property="cardNumber"/>
+        <result column="expiration_date" property="expirationDate"/>
+        <result column="security_key" property="securityKey"/>
+        <result column="transaction_id" property="transactionId"/>
+        <result column="status" property="status"/>
+        <result column="auth_code" property="authCode"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <insert id="insertOne" parameterType="com.px.sp_boot.oxm.pojo.AuthorizePayInfo">
+        INSERT INTO authorize_transaction (client_key, category, sales_id, amount, card_number,
+        expiration_date, security_key, transaction_id, status,auth_code, create_time)
+        VALUES (#{clientKey}, #{category}, #{salesId}, #{amount}, #{cardNumber}, #{expirationDate},
+        #{securityKey}, #{transactionId}, #{status}, #{authCode}, #{createTime})
+    </insert>
+
+    <select id="countByKeyAndDate" parameterType="com.px.sp_boot.oxm.pojo.AuthorizePayInfo" resultType="int">
+        SELECT COUNT(*)
+        FROM authorize_transaction
+        WHERE client_key=#{clientKey} AND create_time LIKE #{createTime}
+    </select>
+
+    <select id="selectAll" resultMap="authorizePayInfo">
+        SELECT * FROM authorize_transaction
+    </select>
+
+</mapper>
